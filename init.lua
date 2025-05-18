@@ -223,6 +223,17 @@ vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right win
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
+-- Keybind to open init.lua
+vim.keymap.set(
+	"n",
+	"<C-c>",
+	"<cmd>tabnew C:\\Users\\citrus\\AppData\\Local\\nvim\\init.lua<CR>",
+	{ desc = "Open init.lua in a new tab" }
+)
+
+-- Find project keymap
+vim.keymap.set("n", "<leader>fp", "<cmd>Telescope projects<CR>", { desc = "Find Projects" })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -835,12 +846,12 @@ require("lazy").setup({
 					-- `friendly-snippets` contains a variety of premade snippets.
 					--    See the README about individual language/framework/plugin snippets:
 					--    https://github.com/rafamadriz/friendly-snippets
-					-- {
-					--   'rafamadriz/friendly-snippets',
-					--   config = function()
-					--     require('luasnip.loaders.from_vscode').lazy_load()
-					--   end,
-					-- },
+					{
+						"rafamadriz/friendly-snippets",
+						config = function()
+							require("luasnip.loaders.from_vscode").lazy_load()
+						end,
+					},
 				},
 			},
 			"saadparwaiz1/cmp_luasnip",
@@ -883,8 +894,8 @@ require("lazy").setup({
 					-- Accept ([y]es) the completion.
 					--  This will auto-import if your LSP supports it.
 					--  This will expand snippets if the LSP sent a snippet.
-					["<C-y>"] = cmp.mapping.confirm({ select = true }),
-
+					-- ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+					["<Tab>"] = cmp.mapping.confirm({ select = true }),
 					-- If you prefer more traditional completion keymaps,
 					-- you can uncomment the following lines
 					--['<CR>'] = cmp.mapping.confirm { select = true },
@@ -1041,6 +1052,36 @@ require("lazy").setup({
 		"mrcjkb/rustaceanvim",
 		version = "^6", -- Recommended
 		lazy = false, -- This plugin is already lazy
+	},
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		config = function()
+			require("copilot").setup({})
+		end,
+		lazy = true,
+	},
+	{
+		"ahmedkhalf/project.nvim",
+		config = function()
+			require("project_nvim").setup({
+				-- Optional settings
+				manual_mode = false,
+				detection_methods = { "pattern" }, -- or "lsp"
+				patterns = { ".git", "Makefile", "package.json" },
+				show_hidden = false,
+				silent_chdir = true,
+				datapath = vim.fn.stdpath("data"),
+
+				on_project_selected = function(project)
+					vim.cmd("cd " .. project.path) -- Change working directory
+					vim.cmd("enew") -- Open a blank buffer (optional)
+					vim.cmd("Telescope find_files") -- Show files to open (optional)
+				end,
+			})
+			require("telescope").load_extension("projects")
+		end,
 	},
 
 	-- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
