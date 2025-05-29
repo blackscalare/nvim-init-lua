@@ -226,7 +226,8 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 -- Keybind to open init.lua
 vim.keymap.set(
 	"n",
-	"<C-c>",
+	--"<C-c>",
+	"<leader>cc",
 	"<cmd>tabnew C:\\Users\\citrus\\AppData\\Local\\nvim\\init.lua<CR>",
 	{ desc = "Open init.lua in a new tab" }
 )
@@ -789,7 +790,7 @@ require("lazy").setup({
 		cmd = { "ConformInfo" },
 		keys = {
 			{
-				"<leader>f",
+				"<leader>ff",
 				function()
 					require("conform").format({ async = true, lsp_format = "fallback" })
 				end,
@@ -1082,6 +1083,10 @@ require("lazy").setup({
 			})
 			require("telescope").load_extension("projects")
 		end,
+	},
+	{
+		"Civitasv/cmake-tools.nvim",
+		opts = {},
 	},
 
 	-- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
