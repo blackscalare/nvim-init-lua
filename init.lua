@@ -1088,6 +1088,14 @@ require("lazy").setup({
 		"Civitasv/cmake-tools.nvim",
 		opts = {},
 	},
+	{
+		"folke/persistence.nvim",
+		event = "BufReadPre",
+		opts = {
+			dir = vim.fn.stdpath("state") .. "/sessions/",
+			options = { "buffers", "curdir", "tabpages", "winsize" },
+		},
+	},
 
 	-- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
 	-- init.lua. If you want these files, they are in the repository, so you can just download them and
