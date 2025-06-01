@@ -174,7 +174,7 @@ vim.opt.splitbelow = true
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = "· ", trail = "·", nbsp = "␣" }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = "split"
@@ -222,18 +222,6 @@ vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left wind
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
-
--- Keybind to open init.lua
-vim.keymap.set(
-	"n",
-	--"<C-c>",
-	"<leader>cc",
-	"<cmd>tabnew C:\\Users\\citrus\\AppData\\Local\\nvim\\init.lua<CR>",
-	{ desc = "Open init.lua in a new tab" }
-)
-
--- Find project keymap
-vim.keymap.set("n", "<leader>fp", "<cmd>Telescope projects<CR>", { desc = "Find Projects" })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
