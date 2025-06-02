@@ -7,7 +7,7 @@ return {
 		"n",
 		--"<C-c>",
 		"<leader>cc",
-		"<cmd>tabnew C:\\Users\\citrus\\AppData\\Local\\nvim\\init.lua<CR>",
+		"<cmd>tabnew ~/.config/nvim/init.lua<CR>",
 		{ desc = "Open init.lua in a new tab" }
 	),
 	-- Find project keymap

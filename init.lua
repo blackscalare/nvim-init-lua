@@ -84,12 +84,6 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
-vim.o.shell = "powershell"
-vim.o.shellcmdflag =
-	"-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
-vim.o.shellquote = ""
-vim.o.shellxquote = ""
-
 -- Environment variables
 vim.env.LIBCLANG_PATH = "C:\\Program Files\\LLVM\\bin"
 vim.env.CC = "clang"
@@ -1041,15 +1035,6 @@ require("lazy").setup({
 		"mrcjkb/rustaceanvim",
 		version = "^6", -- Recommended
 		lazy = false, -- This plugin is already lazy
-	},
-	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "InsertEnter",
-		config = function()
-			require("copilot").setup({})
-		end,
-		lazy = true,
 	},
 	{
 		"ahmedkhalf/project.nvim",
