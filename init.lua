@@ -231,6 +231,15 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "make", "c", "cpp" },
+	callback = function()
+		vim.b.sleuth_automatic = 0
+		vim.bo.shiftwidth = 4
+		vim.bo.tabstop = 4
+	end,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -1012,6 +1021,7 @@ require("lazy").setup({
 				"query",
 				"vim",
 				"vimdoc",
+				"regex",
 			},
 			-- Autoinstall languages that are not installed
 			auto_install = true,
@@ -1069,7 +1079,36 @@ require("lazy").setup({
 			options = { "buffers", "curdir", "tabpages", "winsize" },
 		},
 	},
-
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {},
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		},
+		lsp = {
+			-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+			override = {
+				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+				["vim.lsp.util.stylize_markdown"] = true,
+				["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+			},
+		},
+		-- you can enable a preset for easier configuration
+		presets = {
+			bottom_search = true, -- use a classic bottom cmdline for search
+			command_palette = true, -- position the cmdline and popupmenu together
+			long_message_to_split = true, -- long messages will be sent to a split
+			inc_rename = false, -- enables an input dialog for inc-rename.nvim
+			lsp_doc_border = false, -- add a border to hover docs and signature help
+		},
+	},
+	{
+		"akinsho/toggleterm.nvim",
+		version = "*",
+		config = true,
+	},
 	-- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
 	-- init.lua. If you want these files, they are in the repository, so you can just download them and
 	-- place them in the correct locations.
@@ -1097,25 +1136,25 @@ require("lazy").setup({
 	-- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
 	-- you can continue same window with `<space>sr` which resumes last telescope search
 }, {
-	ui = {
-		-- If you are using a Nerd Font: set icons to an empty table which will use the
-		-- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
-		icons = vim.g.have_nerd_font and {} or {
-			cmd = "⌘",
-			config = "🛠",
-			event = "📅",
-			ft = "📂",
-			init = "⚙",
-			keys = "🗝",
-			plugin = "🔌",
-			runtime = "💻",
-			require = "🌙",
-			source = "📄",
-			start = "🚀",
-			task = "📌",
-			lazy = "💤 ",
-		},
-	},
+	-- ui = {
+	-- 	-- If you are using a Nerd Font: set icons to an empty table which will use the
+	-- 	-- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
+	-- 	icons = vim.g.have_nerd_font and {} or {
+	-- 		cmd = "⌘",
+	-- 		config = "🛠",
+	-- 		event = "📅",
+	-- 		ft = "📂",
+	-- 		init = "⚙",
+	-- 		keys = "🗝",
+	-- 		plugin = "🔌",
+	-- 		runtime = "💻",
+	-- 		require = "🌙",
+	-- 		source = "📄",
+	-- 		start = "🚀",
+	-- 		task = "📌",
+	-- 		lazy = "💤 ",
+	-- 	},
+	-- },
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
